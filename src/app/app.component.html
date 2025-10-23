@@ -1,0 +1,134 @@
+<nav *ngIf="usuarioLogueado">
+  <ul>
+    <!-- Admin -->
+    <li *ngIf="esAdmin()">
+      <label>Usuarios:</label>
+      <select (change)="navegar($event)">
+        <option value="">Seleccione</option>
+        <option value="/usuarios/listar">Listar</option>
+        <option value="/usuarios/agregar">Agregar</option>
+      </select>
+    </li>
+
+    <li *ngIf="esAdmin()">
+      <label>Fisioterapeutas:</label>
+      <select (change)="navegar($event)">
+        <option value="">Seleccione</option>
+        <option value="/fisioterapeutas/listar">Listar</option>
+        <option value="/fisioterapeutas/agregar">Agregar</option>
+      </select>
+    </li>
+
+    <li *ngIf="esAdmin()">
+      <label>Pacientes:</label>
+      <select (change)="navegar($event)">
+        <option value="">Seleccione</option>
+        <option value="/pacientes/listar">Listar</option>
+        <option value="/pacientes/agregar">Agregar</option>
+      </select>
+    </li>
+
+    <li *ngIf="esAdmin()">
+      <label>Citas:</label>
+      <select (change)="navegar($event)">
+        <option value="">Seleccione</option>
+        <option value="/citas/listar">Listar</option>
+        
+      </select>
+    </li>
+
+    <li *ngIf="esAdmin()">
+      <label>Pagos:</label>
+      <select (change)="navegar($event)">
+        <option value="">Seleccione</option>
+        <option value="/pagos/listar">Listar</option>
+        <option value="/pagos/agregar">Agregar</option>
+      </select>
+    </li>
+
+    <li *ngIf="esAdmin()">
+      <label>Servicios:</label>
+      <select (change)="navegar($event)">
+        <option value="">Seleccione</option>
+        <option value="/servicios/listar">Listar</option>
+        <option value="/servicios/agregar">Agregar</option>
+      </select>
+    </li>
+
+    <li *ngIf="esAdmin()">
+      <label>Tratamientos:</label>
+      <select (change)="navegar($event)">
+        <option value="">Seleccione</option>
+        <option value="/tratamientos/listar">Listar</option>
+        <option value="/tratamientos/agregar">Agregar</option>
+      </select>
+    </li>
+
+    <!-- Fisioterapeuta -->
+    <li *ngIf="esFisioterapeuta()">
+      <label>Pacientes:</label>
+      <select (change)="navegar($event)">
+        <option value="">Seleccione</option>
+        <option value="/pacientes/listar">Listar</option>
+      </select>
+    </li>
+
+    <li *ngIf="esFisioterapeuta()">
+      <label>Citas:</label>
+      <select (change)="navegar($event)">
+        <option value="">Seleccione</option>
+        <option value="/citas/listar">Listar</option>
+        <option value="/citas/agregar">Agregar</option>
+      </select>
+    </li>
+
+    <li *ngIf="esFisioterapeuta()">
+      <label>Servicios:</label>
+      <select (change)="navegar($event)">
+        <option value="">Seleccione</option>
+        <option value="/servicios/listar">Listar</option>
+        <option value="/servicios/agregar">Agregar</option>
+      </select>
+    </li>
+
+    <li *ngIf="esFisioterapeuta()">
+      <label>Tratamientos:</label>
+      <select (change)="navegar($event)">
+        <option value="">Seleccione</option>
+        <option value="/tratamientos/listar">Listar</option>
+        <option value="/tratamientos/agregar">Agregar</option>
+      </select>
+    </li>
+
+    <!-- Paciente -->
+    <li *ngIf="esPaciente()">
+      <label>Mis Citas:</label>
+      <select (change)="navegar($event)">
+        <option value="">Seleccione</option>
+        <option value="/citas/listar">Listar</option>
+      </select>
+    </li>
+
+    <li *ngIf="esPaciente()">
+      <label>Servicios Disponibles:</label>
+      <select (change)="navegar($event)">
+        <option value="">Seleccione</option>
+        <option value="/servicios/listar">Listar</option>
+      </select>
+    </li>
+
+    <li *ngIf="esPaciente()">
+      <label>Tratamientos:</label>
+      <select (change)="navegar($event)">
+        <option value="">Seleccione</option>
+        <option value="/tratamientos/listar">Listar</option>
+      </select>
+    </li>
+  </ul>
+
+  <button (click)="logout()">Cerrar sesión</button>
+</nav>
+
+<div class="content">
+  <router-outlet></router-outlet>
+</div>

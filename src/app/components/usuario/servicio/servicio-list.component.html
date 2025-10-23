@@ -1,0 +1,52 @@
+<div class="servicio-list-container">
+  <h2>Lista de Servicios</h2>
+
+  <!-- Lista de servicios -->
+  <ul>
+    <li *ngFor="let s of servicios">
+      <div class="servicio-item">
+        <div class="servicio-info">
+          {{ s.nombreServi }} — {{ s.descripcionServi }} — {{ s.precioServi | currency }} — {{ s.duracionMin }} min
+        </div>
+        <div class="button-group">
+          <button (click)="editar(s)">Editar</button>
+          <button (click)="eliminar(s.idServicio)">Eliminar</button>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <!-- Formulario para crear o editar servicio -->
+  <div class="servicio-form" *ngIf="servicio">
+    <h3>{{ servicio.idServicio ? 'Editar Servicio' : 'Nuevo Servicio' }}</h3>
+
+    <form (ngSubmit)="guardar()">
+      <div>
+        <label>Nombre:</label>
+        <input type="text" [(ngModel)]="servicio.nombreServi" name="nombre" placeholder="Nombre" required />
+      </div>
+
+      <div>
+        <label>Descripción:</label>
+        <input type="text" [(ngModel)]="servicio.descripcionServi" name="descripcion" placeholder="Descripción" required />
+      </div>
+
+      <div>
+        <label>Precio:</label>
+        <input type="number" [(ngModel)]="servicio.precioServi" name="precio" placeholder="Precio" required />
+      </div>
+
+      <div>
+        <label>Duración (min):</label>
+        <input type="number" [(ngModel)]="servicio.duracionMin" name="duracion" placeholder="Duración en minutos" required />
+      </div>
+
+      <div class="button-group">
+        <button type="submit">{{ servicio.idServicio ? 'Actualizar' : 'Guardar' }}</button>
+        <button type="button" (click)="cancelar()">Cancelar</button>
+      </div>
+    </form>
+
+    <p *ngIf="mensaje" class="mensaje">{{ mensaje }}</p>
+  </div>
+</div>

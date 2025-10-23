@@ -1,0 +1,49 @@
+<div class="usuario-list-container">
+  <h2>Lista de Usuarios</h2>
+
+  <ul>
+    <li *ngFor="let u of usuarios">
+      <span *ngIf="!usuarioEdit || usuarioEdit.idUsuario !== u.idUsuario">
+        ID: {{ u.idUsuario }} - {{ u.username }} ({{ u.rol }})
+        <button (click)="editar(u)">Editar</button>
+        <button (click)="eliminar(u.idUsuario)">Eliminar</button>
+      </span>
+
+      <form *ngIf="usuarioEdit && usuarioEdit.idUsuario === u.idUsuario" #formEdit="ngForm" (ngSubmit)="guardar(formEdit)" novalidate>
+        <input 
+          [(ngModel)]="usuarioEdit.username" 
+          name="username" 
+          required 
+          #usernameEdit="ngModel"
+        />
+        <div *ngIf="usernameEdit.invalid && usernameEdit.touched" class="error">
+          El username es obligatorio.
+        </div>
+
+        <input 
+          [(ngModel)]="usuarioEdit.password" 
+          name="password" 
+          type="password" 
+          required 
+          #passwordEdit="ngModel"
+        />
+        <div *ngIf="passwordEdit.invalid && passwordEdit.touched" class="error">
+          La contraseña es obligatoria.
+        </div>
+
+        <input 
+          [(ngModel)]="usuarioEdit.rol" 
+          name="rol" 
+          required 
+          #rolEdit="ngModel"
+        />
+        <div *ngIf="rolEdit.invalid && rolEdit.touched" class="error">
+          El rol es obligatorio.
+        </div>
+
+        <button type="submit" [disabled]="formEdit.invalid">Guardar</button>
+        <button type="button" (click)="cancelar()">Cancelar</button>
+      </form>
+    </li>
+  </ul>
+</div>

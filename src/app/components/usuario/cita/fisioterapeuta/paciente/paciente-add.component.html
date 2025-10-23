@@ -1,0 +1,44 @@
+<div class="paciente-add-container">
+  <h2>Agregar Paciente</h2>
+  <form (ngSubmit)="guardar()" #formPaciente="ngForm">
+
+    <input type="text" [(ngModel)]="paciente.nombre" name="nombre" placeholder="Nombre" required #nombre="ngModel" />
+    <div *ngIf="nombre.invalid && nombre.touched" class="error">Ingresa un nombre.</div>
+
+    <input type="text" [(ngModel)]="paciente.dpi" name="dpi" placeholder="DPI" required #dpi="ngModel" />
+    <div *ngIf="dpi.invalid && dpi.touched" class="error">Ingresa un DPI.</div>
+
+    <input type="text" [(ngModel)]="paciente.telefono" name="telefono" placeholder="Teléfono" required #telefono="ngModel" />
+    <div *ngIf="telefono.invalid && telefono.touched" class="error">Ingresa un teléfono.</div>
+
+    <input type="email" [(ngModel)]="paciente.correo" name="correo" placeholder="Correo" required #correo="ngModel" />
+    <div *ngIf="correo.invalid && correo.touched" class="error">Ingresa un correo válido.</div>
+
+    <input type="text" [(ngModel)]="paciente.direccion" name="direccion" placeholder="Dirección" required #direccion="ngModel" />
+    <div *ngIf="direccion.invalid && direccion.touched" class="error">Ingresa una dirección.</div>
+
+    <input type="date" [(ngModel)]="paciente.fechaNacimiento" name="fechaNacimiento" required #fechaNacimiento="ngModel" />
+    <div *ngIf="fechaNacimiento.invalid && fechaNacimiento.touched" class="error">Selecciona una fecha de nacimiento.</div>
+
+    <select [(ngModel)]="paciente.genero" name="genero" required #genero="ngModel">
+      <option [ngValue]="null" disabled selected>Seleccione un género</option>
+      <option value="Masculino">Masculino</option>
+      <option value="Femenino">Femenino</option>
+      <option value="Otro">Otro</option>
+    </select>
+    <div *ngIf="genero.invalid && genero.touched" class="error">Selecciona un género.</div>
+
+    <select [(ngModel)]="paciente.estadoPaciente" name="estadoPaciente" required #estadoPaciente="ngModel">
+      <option [ngValue]="null" disabled selected>Seleccione estado</option>
+      <option value="Activo">Activo</option>
+      <option value="Inactivo">Inactivo</option>
+    </select>
+    <div *ngIf="estadoPaciente.invalid && estadoPaciente.touched" class="error">Selecciona un estado.</div>
+
+    <div class="button-group">
+      <button type="submit" [disabled]="formPaciente.invalid">Guardar</button>
+    </div>
+  </form>
+
+  <p *ngIf="mensaje" class="mensaje">{{ mensaje }}</p>
+</div>

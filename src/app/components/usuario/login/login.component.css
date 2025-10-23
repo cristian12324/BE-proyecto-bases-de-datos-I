@@ -1,0 +1,78 @@
+
+.login-container {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 30px 25px;
+  background-color: #f7f9fc;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.login-container h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 18px;
+  border: 1.5px solid #bdc3c7;
+  border-radius: 5px;
+  font-size: 15px;
+  transition: border-color 0.3s ease;
+}
+
+.login-container input[type="text"]:focus,
+.login-container input[type="password"]:focus {
+  border-color: #2980b9;
+  outline: none;
+}
+
+.login-container button {
+  width: 100%;
+  background-color: #2980b9;
+  color: white;
+  font-size: 16px;
+  padding: 12px 0;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-container button:hover {
+  background-color: #1f618d;
+}
+
+
+.login-error {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Opcional: link para registrarse o recuperar contraseña */
+.login-container .links {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.login-container .links a {
+  color: #2980b9;
+  text-decoration: none;
+  font-size: 14px;
+  margin: 0 8px;
+}
+
+.login-container .links a:hover {
+  text-decoration: underline;
+}

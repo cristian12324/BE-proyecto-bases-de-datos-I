@@ -1,0 +1,38 @@
+<div class="tratamiento-add-container">
+  <h2>{{ tratamiento.idTratamiento ? 'Editar Tratamiento' : 'Editar Tratamiento' }}</h2>
+
+  <form (ngSubmit)="guardar()">
+    <div>
+      <label>Descripción:</label>
+      <input type="text" [(ngModel)]="tratamiento.descripcion" name="descripcion" placeholder="Descripción" required />
+    </div>
+
+    <div>
+      <label>Observaciones:</label>
+      <textarea [(ngModel)]="tratamiento.observaciones" name="observaciones" placeholder="Observaciones" required></textarea>
+    </div>
+
+
+    
+    <div>
+      <label>Fecha de Registro:</label>
+      <input type="date" [(ngModel)]="fechaRegistroString" name="fechaRegistro" required />
+    </div>
+
+    <div>
+      <label>Cita:</label>
+      <select [(ngModel)]="tratamiento.cita" name="cita" required>
+        <option *ngFor="let c of citas" [ngValue]="c">
+          {{ getNombrePaciente(c) }} — {{ getNombreServicio(c) }} — {{ c.fecha }} {{ c.hora }}
+        </option>
+      </select>
+    </div>
+
+    <div class="button-group">
+      <button type="submit">{{ tratamiento.idTratamiento ? 'Actualizar' : 'Guardar' }}</button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+
+  <p *ngIf="mensaje" class="mensaje">{{ mensaje }}</p>
+</div>

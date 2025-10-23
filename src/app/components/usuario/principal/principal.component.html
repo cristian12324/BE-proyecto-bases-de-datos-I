@@ -1,0 +1,17 @@
+<h2>Pantalla Principal</h2>
+<p>Bienvenido, {{ usuario?.username }}. Seleccione una opción del menú.</p>
+
+<nav>
+  <button *ngIf="session.esAdmin()" (click)="navegar('/usuarios')">Usuarios</button>
+  <button *ngIf="session.esAdmin()" (click)="navegar('/servicios')">Servicios</button>
+  <button *ngIf="session.esAdmin()" (click)="navegar('/citas')">Citas</button>
+  <button *ngIf="session.esAdmin()" (click)="navegar('/tratamientos')">Tratamientos</button>
+
+  <button *ngIf="session.esFisioterapeuta()" (click)="navegar('/mis-pacientes')">Mis Pacientes</button>
+  <button *ngIf="session.esFisioterapeuta()" (click)="navegar('/registrar-tratamiento')">Registrar Tratamiento</button>
+  <button *ngIf="session.esFisioterapeuta()" (click)="navegar('/citas')">Citas</button>
+
+  <button *ngIf="session.esPaciente()" (click)="navegar('/mis-citas')">Mis Citas</button>
+  <button *ngIf="session.esPaciente()" (click)="navegar('/mis-pagos')">Mis Pagos</button>
+  <button *ngIf="session.esPaciente()" (click)="navegar('/servicios')">Servicios Disponibles</button>
+</nav>

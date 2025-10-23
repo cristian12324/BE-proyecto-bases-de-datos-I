@@ -1,0 +1,16 @@
+<div class="pago-list-container">
+  <h2>Lista de Pagos</h2>
+
+  <ul>
+    <li *ngFor="let p of pagos">
+      <div class="pago-item">
+        <div class="pago-info">
+          {{ p.idPago }} — Cita: {{ p.cita?.idCita }} — {{ p.cita?.pacienteNombre }} — {{ p.cita?.fisioterapeutaNombre }} — {{ p.cita?.servicioNombre }} — {{ p.monto | currency }} — {{ p.fechaPago }} — {{ p.metodo }}
+        </div>
+        <div class="button-group">
+          <button (click)="eliminar(p.idPago)">Eliminar</button>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

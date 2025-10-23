@@ -1,0 +1,57 @@
+<div class="usuario-add-container">
+  <h2>Agregar Usuario</h2>
+  <form #formUsuario="ngForm" (ngSubmit)="guardar(formUsuario)" novalidate>
+
+    <!-- Username y Password siempre visibles -->
+    <input
+      [(ngModel)]="usuario.username"
+      name="username"
+      placeholder="Username"
+      required
+      #username="ngModel"
+    />
+    <div *ngIf="username.invalid && username.touched" class="error">
+      El username es obligatorio.
+    </div>
+
+    <input
+      [(ngModel)]="usuario.password"
+      name="password"
+      type="password"
+      placeholder="Password"
+      required
+      #password="ngModel"
+    />
+    <div *ngIf="password.invalid && password.touched" class="error">
+      La contraseña es obligatoria.
+    </div>
+
+    <!-- Selector de rol -->
+    <select [(ngModel)]="usuario.rol" name="rol" required #rol="ngModel">
+      <option value="" disabled>Seleccione un rol</option>
+      <option value="Paciente">Paciente</option>
+      <option value="Fisioterapeuta">Fisioterapeuta</option>
+      <option value="Admin">Admin</option>
+    </select>
+    <div *ngIf="rol.invalid && rol.touched" class="error">
+      El rol es obligatorio.
+    </div>
+
+    <!-- Campos Paciente -->
+    <div *ngIf="usuario.rol === 'Paciente'">
+      <input placeholder="Nombre" [(ngModel)]="usuario.nombre" name="nombrePaciente" required />
+      <input placeholder="DPI" [(ngModel)]="usuario.dpi" name="dpiPaciente" required />
+      <input placeholder="Teléfono" [(ngModel)]="usuario.telefono" name="telefonoPaciente" required />
+    </div>
+
+    <!-- Campos Fisioterapeuta -->
+    <div *ngIf="usuario.rol === 'Fisioterapeuta'">
+      <input placeholder="Nombre Fisio" [(ngModel)]="usuario.nombreFisio" name="nombreFisio" required />
+      <input placeholder="Teléfono Fisio" [(ngModel)]="usuario.telefonoFisio" name="telefonoFisio" required />
+      <input placeholder="Especialidad" [(ngModel)]="usuario.especialidadFisio" name="especialidadFisio" required />
+      <input placeholder="Correo" [(ngModel)]="usuario.correoFisio" name="correoFisio" required />
+    </div>
+
+    <button type="submit" [disabled]="formUsuario.invalid">Guardar</button>
+  </form>
+</div>

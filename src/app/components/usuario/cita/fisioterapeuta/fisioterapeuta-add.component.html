@@ -1,0 +1,38 @@
+<div class="fisio-add-container">
+  <h2>Agregar Fisioterapeuta</h2>
+  <form (ngSubmit)="guardar()" #formFisio="ngForm">
+
+    <input type="text" [(ngModel)]="fisioterapeuta.nombreFisio" name="nombreFisio" placeholder="Nombre" required #nombre="ngModel"/>
+    <div *ngIf="nombre.invalid && nombre.touched" class="error">
+      El nombre es obligatorio.
+    </div>
+
+    <input type="text" [(ngModel)]="fisioterapeuta.telefonoFisio" name="telefonoFisio" placeholder="Teléfono" required #telefono="ngModel"/>
+    <div *ngIf="telefono.invalid && telefono.touched" class="error">
+      El teléfono es obligatorio.
+    </div>
+
+    <input type="text" [(ngModel)]="fisioterapeuta.correoFisio" name="correoFisio" placeholder="Correo" required #correo="ngModel"/>
+    <div *ngIf="correo.invalid && correo.touched" class="error">
+      El correo es obligatorio.
+    </div>
+
+    <input type="text" [(ngModel)]="fisioterapeuta.especialidadFisio" name="especialidadFisio" placeholder="Especialidad" required #especialidad="ngModel"/>
+    <div *ngIf="especialidad.invalid && especialidad.touched" class="error">
+      La especialidad es obligatoria.
+    </div>
+
+    <select [(ngModel)]="fisioterapeuta.estadoFisio" name="estadoFisio" required #estado="ngModel">
+      <option [ngValue]="null" disabled selected>Seleccione estado</option>
+      <option value="Activo">Activo</option>
+      <option value="Inactivo">Inactivo</option>
+    </select>
+    <div *ngIf="estado.invalid && estado.touched" class="error">
+      Selecciona un estado.
+    </div>
+
+    <button type="submit" [disabled]="formFisio.invalid">Guardar</button>
+  </form>
+
+  <p *ngIf="mensaje" class="mensaje">{{ mensaje }}</p>
+</div>

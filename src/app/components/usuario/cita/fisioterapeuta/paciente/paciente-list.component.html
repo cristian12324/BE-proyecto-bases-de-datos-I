@@ -1,0 +1,42 @@
+<div class="paciente-list-container">
+  <h2>Lista de Pacientes</h2>
+
+  <form *ngIf="paciente" (ngSubmit)="guardar()" #formPacienteEdit="ngForm">
+    <input type="text" [(ngModel)]="paciente.nombre" name="nombre" required #nombre="ngModel" />
+    <input type="text" [(ngModel)]="paciente.dpi" name="dpi" required #dpi="ngModel" />
+    <input type="text" [(ngModel)]="paciente.telefono" name="telefono" required #telefono="ngModel" />
+    <input type="email" [(ngModel)]="paciente.correo" name="correo" required #correo="ngModel" />
+    <input type="text" [(ngModel)]="paciente.direccion" name="direccion" required #direccion="ngModel" />
+    <input type="date" [(ngModel)]="paciente.fechaNacimiento" name="fechaNacimiento" required #fechaNacimiento="ngModel" />
+    <select [(ngModel)]="paciente.genero" name="genero" required #genero="ngModel">
+      <option value="Masculino">Masculino</option>
+      <option value="Femenino">Femenino</option>
+      <option value="Otro">Otro</option>
+    </select>
+    <select [(ngModel)]="paciente.estadoPaciente" name="estadoPaciente" required #estadoPaciente="ngModel">
+      <option value="Activo">Activo</option>
+      <option value="Inactivo">Inactivo</option>
+    </select>
+
+    <div class="button-group">
+      <button type="submit" [disabled]="formPacienteEdit.invalid">{{ paciente.idPaciente ? 'Actualizar' : 'Guardar' }}</button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+
+  <ul>
+    <li *ngFor="let p of pacientes">
+      <div class="paciente-item">
+        <div class="paciente-info">
+          {{ p.idPaciente }} — {{ p.nombre }} — {{ p.dpi }} — {{ p.telefono }} — {{ p.correo }} — {{ p.direccion }} — {{ p.fechaNacimiento }} — {{ p.genero }} — {{ p.estadoPaciente }}
+        </div>
+        <div class="button-group">
+          <button (click)="editar(p)">Editar</button>
+          <button (click)="eliminar(p.idPaciente)">Eliminar</button>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <p *ngIf="mensaje" class="mensaje">{{ mensaje }}</p>
+</div>

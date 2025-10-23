@@ -1,0 +1,43 @@
+<div class="cita-add-container">
+  <h2>Agregar Cita</h2>
+  <form (ngSubmit)="guardar()" #formCita="ngForm">
+
+    <select [(ngModel)]="cita.pacienteId" name="paciente" required #paciente="ngModel">
+      <option [ngValue]="null" disabled selected>Seleccione un paciente</option>
+      <option *ngFor="let p of pacientes" [ngValue]="p.idPaciente">{{ p.nombre }}</option>
+    </select>
+    <div *ngIf="paciente.invalid && paciente.touched" class="error">
+      Selecciona un paciente.
+    </div>
+
+    <select [(ngModel)]="cita.fisioterapeutaId" name="fisioterapeuta" required #fisio="ngModel">
+      <option [ngValue]="null" disabled selected>Seleccione un fisioterapeuta</option>
+      <option *ngFor="let f of fisioterapeutas" [ngValue]="f.idFisio">{{ f.nombre }}</option>
+    </select>
+    <div *ngIf="fisio.invalid && fisio.touched" class="error">
+      Selecciona un fisioterapeuta.
+    </div>
+
+    <select [(ngModel)]="cita.servicioId" name="servicio" required #servicio="ngModel">
+      <option [ngValue]="null" disabled selected>Seleccione un servicio</option>
+      <option *ngFor="let s of servicios" [ngValue]="s.idServicio">{{ s.nombre }}</option>
+    </select>
+    <div *ngIf="servicio.invalid && servicio.touched" class="error">
+      Selecciona un servicio.
+    </div>
+
+    <input type="date" [(ngModel)]="cita.fecha" name="fecha" required #fecha="ngModel"/>
+    <div *ngIf="fecha.invalid && fecha.touched" class="error">
+      Ingresa una fecha.
+    </div>
+
+    <input type="time" [(ngModel)]="cita.hora" name="hora" required #hora="ngModel"/>
+    <div *ngIf="hora.invalid && hora.touched" class="error">
+      Ingresa una hora.
+    </div>
+
+    <button type="submit" [disabled]="formCita.invalid">Guardar</button>
+  </form>
+
+  <p *ngIf="mensaje" class="mensaje">{{ mensaje }}</p>
+</div>

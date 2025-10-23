@@ -1,0 +1,41 @@
+<div class="pago-add-container">
+  <h2>Registrar Pago</h2>
+  <form (ngSubmit)="guardar()" #formPago="ngForm">
+
+    <select [(ngModel)]="pago.citaId" name="citaId" required #cita="ngModel">
+      <option [ngValue]="0" disabled selected>Seleccione una cita</option>
+      <option *ngFor="let c of citas" [ngValue]="c.idCita">
+        {{ c.idCita }} — {{ c.pacienteNombre }} — {{ c.fisioterapeutaNombre }} — {{ c.servicioNombre }}
+      </option>
+    </select>
+    <div *ngIf="cita.invalid && cita.touched" class="error">
+      Selecciona una cita.
+    </div>
+
+    <input type="date" [(ngModel)]="pago.fechaPago" name="fechaPago" required #fechaPago="ngModel" />
+    <div *ngIf="fechaPago.invalid && fechaPago.touched" class="error">
+      Ingresa la fecha del pago.
+    </div>
+
+    <input type="number" [(ngModel)]="pago.monto" name="monto" required #monto="ngModel" step="0.01" placeholder="Monto" />
+    <div *ngIf="monto.invalid && monto.touched" class="error">
+      Ingresa un monto válido.
+    </div>
+
+    <select [(ngModel)]="pago.metodo" name="metodo" required #metodo="ngModel">
+      <option [ngValue]="null" disabled selected>Seleccione un método</option>
+      <option value="Efectivo">Efectivo</option>
+      <option value="Tarjeta">Tarjeta</option>
+      <option value="Transferencia">Transferencia</option>
+    </select>
+    <div *ngIf="metodo.invalid && metodo.touched" class="error">
+      Selecciona un método de pago.
+    </div>
+
+    <div class="button-group">
+      <button type="submit" [disabled]="formPago.invalid">Guardar</button>
+    </div>
+  </form>
+
+  <p *ngIf="mensaje" class="mensaje">{{ mensaje }}</p>
+</div>

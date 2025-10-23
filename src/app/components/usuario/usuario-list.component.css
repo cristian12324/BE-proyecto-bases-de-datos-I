@@ -1,0 +1,70 @@
+.usuario-list-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.usuario-list-container h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.usuario-list-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.usuario-list-container li {
+  background-color: #f2f2f2;
+  margin-bottom: 12px;
+  padding: 15px;
+  border-radius: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.usuario-list-container span {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.usuario-list-container input {
+  flex: 1;
+  min-width: 150px;
+  padding: 10px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.usuario-list-container button {
+  padding: 10px 14px;
+  margin-left: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #2980b9;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.usuario-list-container li span {
+  font-weight: 600;
+}
+
+.usuario-list-container li span:first-child {
+  color: #555;
+  margin-right: 8px;
+}
+
+.usuario-list-container button:hover {
+  background-color: #1f618d;
+}

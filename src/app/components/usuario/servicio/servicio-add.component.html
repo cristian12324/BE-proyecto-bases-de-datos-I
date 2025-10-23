@@ -1,0 +1,24 @@
+<div class="servicio-add-container">
+  <h2>Agregar Servicio</h2>
+  <form (ngSubmit)="guardar()" #formServicio="ngForm">
+
+    <input type="text" [(ngModel)]="servicio.nombreServi" name="nombreServi" placeholder="Nombre del Servicio" required #nombre="ngModel" />
+    <div *ngIf="nombre.invalid && nombre.touched" class="error">Ingresa el nombre del servicio.</div>
+
+    <textarea [(ngModel)]="servicio.descripcionServi" name="descripcionServi" placeholder="Descripción" required #desc="ngModel"></textarea>
+    <div *ngIf="desc.invalid && desc.touched" class="error">Ingresa la descripción del servicio.</div>
+
+    <input type="number" [(ngModel)]="servicio.precioServi" name="precioServi" placeholder="Precio" required #precio="ngModel" step="0.01" />
+    <div *ngIf="precio.invalid && precio.touched" class="error">Ingresa un precio válido.</div>
+
+    <input type="number" [(ngModel)]="servicio.duracionMin" name="duracionMin" placeholder="Duración (minutos)" required #duracion="ngModel" />
+    <div *ngIf="duracion.invalid && duracion.touched" class="error">Ingresa la duración en minutos.</div>
+
+    <div class="button-group">
+      <button type="submit" [disabled]="formServicio.invalid">Guardar</button>
+    </div>
+
+  </form>
+
+  <p *ngIf="mensaje" class="mensaje">{{ mensaje }}</p>
+</div>

@@ -1,0 +1,52 @@
+<div class="cita-list-container">
+  <h2>Lista de Citas</h2>
+
+  <!-- Botón para crear una nueva cita -->
+  <button type="button" (click)="nuevaCita()">Crear cita</button>
+
+  <!-- Formulario de cita -->
+  <form *ngIf="cita" (ngSubmit)="guardar()" #formCitaEdit="ngForm">
+    
+    <select [(ngModel)]="cita.pacienteId" name="pacienteId" required>
+      <option value="0" disabled selected>Seleccione un paciente</option>
+      <option *ngFor="let p of pacientes" [value]="p.idPaciente">{{ p.nombre }}</option>
+    </select>
+
+    <select [(ngModel)]="cita.fisioterapeutaId" name="fisioterapeutaId" required>
+      <option value="0" disabled selected>Seleccione un fisioterapeuta</option>
+      <option *ngFor="let f of fisioterapeutas" [value]="f.idFisio">{{ f.nombreFisio }}</option>
+    </select>
+
+    <select [(ngModel)]="cita.servicioId" name="servicioId" required>
+      <option value="0" disabled selected>Seleccione un servicio</option>
+      <option *ngFor="let s of servicios" [value]="s.idServicio">{{ s.nombreServi }}</option>
+    </select>
+
+    <input type="date" [(ngModel)]="cita.fecha" name="fecha" required />
+    <input type="time" [(ngModel)]="cita.hora" name="hora" required />
+
+    <div class="boton-container">
+      <button type="submit" [disabled]="formCitaEdit.invalid">
+        {{ cita.idCita ? 'Actualizar' : 'Guardar' }}
+      </button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+
+  <!-- Lista de citas -->
+  <ul>
+    <li *ngFor="let c of citas">
+      <div class="cita-item">
+        <div class="cita-info">
+          {{ c.idCita }} — {{ c.pacienteNombre }} — {{ c.fisioterapeutaNombre }} — {{ c.servicioNombre }} — {{ c.fecha }} {{ c.hora }}
+        </div>
+        <div class="boton-container">
+          <button (click)="editar(c)">Editar</button>
+          <button (click)="eliminar(c.idCita)">Eliminar</button>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <p *ngIf="mensaje" class="mensaje">{{ mensaje }}</p>
+</div>

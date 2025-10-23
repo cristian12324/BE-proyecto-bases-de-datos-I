@@ -1,0 +1,35 @@
+<div class="fisio-list-container">
+  <h2>Lista de Fisioterapeutas</h2>
+
+  <form *ngIf="fisioterapeuta" (ngSubmit)="guardar()" #formFisioEdit="ngForm">
+    <input type="text" [(ngModel)]="fisioterapeuta.nombreFisio" name="nombreFisio" required #nombre="ngModel"/>
+    <input type="text" [(ngModel)]="fisioterapeuta.telefonoFisio" name="telefonoFisio" required #telefono="ngModel"/>
+    <input type="text" [(ngModel)]="fisioterapeuta.correoFisio" name="correoFisio" required #correo="ngModel"/>
+    <input type="text" [(ngModel)]="fisioterapeuta.especialidadFisio" name="especialidadFisio" required #especialidad="ngModel"/>
+    <select [(ngModel)]="fisioterapeuta.estadoFisio" name="estadoFisio" required #estado="ngModel">
+      <option value="Activo">Activo</option>
+      <option value="Inactivo">Inactivo</option>
+    </select>
+
+    <div class="boton-container">
+      <button type="submit" [disabled]="formFisioEdit.invalid">{{ fisioterapeuta.idFisio ? 'Actualizar' : 'Guardar' }}</button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+
+  <ul>
+    <li *ngFor="let f of fisioterapeutas">
+      <div class="fisio-item">
+        <div class="fisio-info">
+          {{ f.idFisio }} — {{ f.nombreFisio }} — {{ f.telefonoFisio }} — {{ f.correoFisio }} — {{ f.especialidadFisio }} — {{ f.estadoFisio }}
+        </div>
+        <div class="boton-container">
+          <button (click)="editar(f)">Editar</button>
+          <button (click)="eliminar(f.idFisio)">Eliminar</button>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <p *ngIf="mensaje" class="mensaje">{{ mensaje }}</p>
+</div>
