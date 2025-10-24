@@ -23,6 +23,10 @@ export class CitaService {
   return this.http.get<Cita[]>(`${this.apiUrl}/mis-citas?idUsuario=${idUsuario}`);
 }
 
+listarPorUsuario(idUsuario: number) {
+  return this.http.get<Cita[]>(`http://localhost:8080/api/citas/mis-citas?idUsuario=${idUsuario}`);
+}
+
 
 
 

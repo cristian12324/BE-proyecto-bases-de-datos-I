@@ -7,13 +7,16 @@
         <div class="servicio-info">
           {{ s.nombreServi }} — {{ s.descripcionServi }} — {{ s.precioServi | currency }} — {{ s.duracionMin }} min
         </div>
+
         <div class="button-group">
           <!-- Solo visible si NO es paciente -->
           <button *ngIf="rolUsuario !== 'paciente'" (click)="editar(s)">Editar</button>
           <button *ngIf="rolUsuario !== 'paciente'" (click)="eliminar(s.idServicio)">Eliminar</button>
 
-          <!-- Siempre visible -->
-          <button (click)="solicitarServicio(s.idServicio!)">Solicitar</button>
+          <!-- Botón “Solicitar” solo visible para Paciente -->
+          <button *ngIf="rolUsuario === 'paciente'" (click)="solicitarServicio(s.idServicio!)">
+            Solicitar
+          </button>
         </div>
       </div>
     </li>

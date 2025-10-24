@@ -85,15 +85,26 @@ export class ServicioListComponent implements OnInit {
   }
 
   eliminar(id: number | undefined): void {
-    if (this.rolUsuario === 'paciente') return;  // Bloqueo para paciente
+  if (this.rolUsuario === 'paciente') return;  // Bloqueo para paciente
 
-    if (id && confirm('¿Está seguro de eliminar este servicio?')) {
-      this.servicioService.eliminar(id).subscribe(() => { 
+  if (id && confirm('¿Está seguro de eliminar este servicio?')) {
+    this.servicioService.eliminar(id).subscribe({
+      next: () => { 
         alert('Servicio eliminado correctamente'); 
         this.listar(); 
-      });
-    }
+      },
+      error: (err) => {
+        // Si es un error de restricción de integridad, mostramos un mensaje amigable
+        if (err.status === 400 || err.status === 500) {
+          alert('No se puede eliminar este servicio porque tiene citas asociadas.');
+        } else {
+          alert(err.error?.message || 'Error al eliminar el servicio.');
+        }
+      }
+    });
   }
+}
+
 
   solicitarServicio(idServicio: number): void {
     if (typeof window === 'undefined') return;  // Protege en SSR

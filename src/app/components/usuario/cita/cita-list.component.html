@@ -1,13 +1,13 @@
 <div class="cita-list-container">
   <h2>Lista de Citas</h2>
 
-  <!-- Botón solo visible para Admin/Fisio -->
-  <button *ngIf="rolUsuario !== 'Paciente'" type="button" (click)="nuevaCita()">
-    Crear cita
+  <!-- Botón solo visible para Paciente -->
+  <button *ngIf="rolUsuario?.toLowerCase() === 'paciente'" type="button" (click)="nuevaCita()">
+    Solicitar cita
   </button>
 
-  <!-- Formulario de cita, solo para Admin/Fisio -->
-  <form *ngIf="cita && rolUsuario !== 'Paciente'" (ngSubmit)="guardar()" #formCitaEdit="ngForm">
+  <!-- Formulario de cita, solo visible para Admin/Fisio -->
+  <form *ngIf="cita && rolUsuario?.toLowerCase() !== 'paciente'" (ngSubmit)="guardar()" #formCitaEdit="ngForm">
     <select [(ngModel)]="cita.pacienteId" name="pacienteId" required>
       <option value="0" disabled selected>Seleccione un paciente</option>
       <option *ngFor="let p of pacientes" [value]="p.idPaciente">{{ p.nombre }}</option>
@@ -42,10 +42,9 @@
           {{ c.fecha }} {{ c.hora }} — {{ c.servicioNombre }} — {{ c.fisioterapeutaNombre }} — {{ c.pacienteNombre }}
         </div>
 
-        <!-- Botón eliminar visible para todos -->
         <div class="boton-container">
-          <!-- Solo Admin/Fisio tienen Editar -->
-          <button *ngIf="rolUsuario !== 'Paciente'" (click)="editar(c)">Editar</button>
+          <!-- Solo Admin/Fisio pueden Editar -->
+          <button *ngIf="rolUsuario?.toLowerCase() !== 'paciente'" (click)="editar(c)">Editar</button>
 
           <!-- Todos pueden eliminar -->
           <button (click)="eliminar(c.idCita)">Eliminar</button>

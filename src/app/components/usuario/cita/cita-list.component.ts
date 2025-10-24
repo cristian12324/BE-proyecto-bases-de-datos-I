@@ -25,7 +25,7 @@ export class CitaListComponent implements OnInit {
   servicios: Servicio[] = [];
   mensaje: string = '';
   rolUsuario: string = '';
-  idPacienteLogueado: number | null = null;
+  idUsuarioLogueado: number | null = null;
 
   constructor(
     private citaService: CitaService,
@@ -35,14 +35,17 @@ export class CitaListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const usuarioStr = localStorage.getItem('usuario');
-    if (usuarioStr) {
-      const usuario = JSON.parse(usuarioStr);
-      this.rolUsuario = usuario.rol;
-      this.idPacienteLogueado = usuario.paciente?.idPaciente || null;
+    // Comprobar que estamos en navegador
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const usuarioStr = localStorage.getItem('usuario');
+      if (usuarioStr) {
+        const usuario = JSON.parse(usuarioStr);
+        this.rolUsuario = usuario.rol;
+        this.idUsuarioLogueado = usuario.idUsuario;
+      }
     }
 
-    // Cargar datos siempre
+    // Cargar listas de apoyo
     this.pacienteService.listar().subscribe(data => this.pacientes = data);
     this.fisioService.listar().subscribe(data => this.fisioterapeutas = data);
     this.servicioService.listar().subscribe(data => this.servicios = data);
@@ -51,26 +54,25 @@ export class CitaListComponent implements OnInit {
   }
 
   listar(): void {
-    if (this.rolUsuario === 'Paciente' && this.idPacienteLogueado) {
-      // Paciente: solo sus citas
-      this.citaService.listarPorPaciente(this.idPacienteLogueado).subscribe(data => {
-        this.citas = data.map(c => ({
-          ...c,
-          pacienteNombre: (c.paciente && 'nombre' in c.paciente) ? (c.paciente as any).nombre : '',
-          fisioterapeutaNombre: (c.fisioterapeuta && 'nombreFisio' in c.fisioterapeuta) ? (c.fisioterapeuta as any).nombreFisio : '',
-          servicioNombre: (c.servicio && 'nombreServi' in c.servicio) ? (c.servicio as any).nombreServi : ''
-        }));
+    if (!this.idUsuarioLogueado) return;
+
+    const mapCitas = (data: Cita[]) =>
+      data.map(c => ({
+        ...c,
+        pacienteNombre: (c.paciente as Paciente)?.nombre || '',
+        fisioterapeutaNombre: (c.fisioterapeuta as Fisioterapeuta)?.nombreFisio || '',
+        servicioNombre: (c.servicio as Servicio)?.nombreServi || ''
+      }));
+
+    if (this.rolUsuario === 'Paciente' || this.rolUsuario === 'Fisioterapeuta') {
+      this.citaService.listarPorUsuario(this.idUsuarioLogueado).subscribe(data => {
+        this.citas = mapCitas(data);
         this.mensaje = this.citas.length ? '' : 'No tienes citas registradas.';
       });
     } else {
-      // Admin/Fisio: todas las citas
+      // Admin
       this.citaService.listar().subscribe(data => {
-        this.citas = data.map(c => ({
-          ...c,
-          pacienteNombre: (c.paciente && 'nombre' in c.paciente) ? (c.paciente as any).nombre : '',
-          fisioterapeutaNombre: (c.fisioterapeuta && 'nombreFisio' in c.fisioterapeuta) ? (c.fisioterapeuta as any).nombreFisio : '',
-          servicioNombre: (c.servicio && 'nombreServi' in c.servicio) ? (c.servicio as any).nombreServi : ''
-        }));
+        this.citas = mapCitas(data);
         this.mensaje = this.citas.length ? '' : 'No hay citas registradas.';
       });
     }
@@ -98,9 +100,9 @@ export class CitaListComponent implements OnInit {
     }
     this.cita = {
       idCita: cita.idCita,
-      pacienteId: cita.paciente?.idPaciente || 0,
-      fisioterapeutaId: cita.fisioterapeuta?.idFisio || 0,
-      servicioId: cita.servicio?.idServicio || 0,
+      pacienteId: (cita.paciente as Paciente)?.idPaciente || 0,
+      fisioterapeutaId: (cita.fisioterapeuta as Fisioterapeuta)?.idFisio || 0,
+      servicioId: (cita.servicio as Servicio)?.idServicio || 0,
       fecha: cita.fecha,
       hora: cita.hora,
       estado: cita.estado
@@ -138,16 +140,17 @@ export class CitaListComponent implements OnInit {
 
   eliminar(id: number | undefined): void {
     if (!id) return;
-    if (this.rolUsuario === 'Paciente') {
-      // Opcional: permitir que el paciente elimine solo sus citas
-      if (!confirm('¿Está seguro de cancelar tu cita?')) return;
-    } else {
-      if (!confirm('¿Está seguro de eliminar esta cita?')) return;
-    }
+
+    const confirmMsg = this.rolUsuario === 'Paciente'
+      ? '¿Está seguro de cancelar tu cita?'
+      : '¿Está seguro de eliminar esta cita?';
+
+    if (!confirm(confirmMsg)) return;
 
     this.citaService.eliminar(id).subscribe({
       next: () => {
-        alert(this.rolUsuario === 'Paciente' ? 'Cita cancelada correctamente' : 'Cita eliminada correctamente');
+        const successMsg = this.rolUsuario === 'Paciente' ? 'Cita cancelada correctamente' : 'Cita eliminada correctamente';
+        alert(successMsg);
         this.listar();
       },
       error: () => alert('Error al eliminar la cita.')
