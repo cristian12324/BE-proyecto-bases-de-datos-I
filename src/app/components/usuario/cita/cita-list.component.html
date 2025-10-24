@@ -1,12 +1,13 @@
 <div class="cita-list-container">
   <h2>Lista de Citas</h2>
 
-  <!-- Botón para crear una nueva cita -->
-  <button type="button" (click)="nuevaCita()">Crear cita</button>
+  <!-- Botón solo visible para Admin/Fisio -->
+  <button *ngIf="rolUsuario !== 'Paciente'" type="button" (click)="nuevaCita()">
+    Crear cita
+  </button>
 
-  <!-- Formulario de cita -->
-  <form *ngIf="cita" (ngSubmit)="guardar()" #formCitaEdit="ngForm">
-    
+  <!-- Formulario de cita, solo para Admin/Fisio -->
+  <form *ngIf="cita && rolUsuario !== 'Paciente'" (ngSubmit)="guardar()" #formCitaEdit="ngForm">
     <select [(ngModel)]="cita.pacienteId" name="pacienteId" required>
       <option value="0" disabled selected>Seleccione un paciente</option>
       <option *ngFor="let p of pacientes" [value]="p.idPaciente">{{ p.nombre }}</option>
@@ -38,15 +39,21 @@
     <li *ngFor="let c of citas">
       <div class="cita-item">
         <div class="cita-info">
-          {{ c.idCita }} — {{ c.pacienteNombre }} — {{ c.fisioterapeutaNombre }} — {{ c.servicioNombre }} — {{ c.fecha }} {{ c.hora }}
+          {{ c.fecha }} {{ c.hora }} — {{ c.servicioNombre }} — {{ c.fisioterapeutaNombre }} — {{ c.pacienteNombre }}
         </div>
+
+        <!-- Botón eliminar visible para todos -->
         <div class="boton-container">
-          <button (click)="editar(c)">Editar</button>
+          <!-- Solo Admin/Fisio tienen Editar -->
+          <button *ngIf="rolUsuario !== 'Paciente'" (click)="editar(c)">Editar</button>
+
+          <!-- Todos pueden eliminar -->
           <button (click)="eliminar(c.idCita)">Eliminar</button>
         </div>
       </div>
     </li>
   </ul>
 
+  <!-- Mensaje si no hay citas -->
   <p *ngIf="mensaje" class="mensaje">{{ mensaje }}</p>
 </div>

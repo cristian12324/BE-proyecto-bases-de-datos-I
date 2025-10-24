@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
   }
 
   checkSesion() {
+  if (typeof localStorage !== 'undefined') {
     const usuarioStr = localStorage.getItem('usuario');
     if (usuarioStr) {
       this.usuarioLogueado = true;
@@ -35,7 +36,12 @@ export class AppComponent implements OnInit {
       this.usuarioLogueado = false;
       this.rolUsuario = '';
     }
+  } else {
+    this.usuarioLogueado = false;
+    this.rolUsuario = '';
   }
+}
+
 
   navegar(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;

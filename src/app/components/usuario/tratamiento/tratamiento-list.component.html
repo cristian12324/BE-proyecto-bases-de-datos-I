@@ -10,7 +10,9 @@
             — {{ getNombrePaciente(t.cita) }} — {{ getNombreServicio(t.cita) }}
           </span>
         </div>
-        <div class="button-group">
+
+        <!-- Solo Admin/Fisio pueden editar/eliminar -->
+        <div class="button-group" *ngIf="rolUsuario !== 'Paciente'">
           <button (click)="editar(t)">Editar</button>
           <button (click)="eliminar(t.idTratamiento)">Eliminar</button>
         </div>
@@ -18,7 +20,8 @@
     </li>
   </ul>
 
-  <div class="tratamiento-form" *ngIf="tratamiento">
+  <!-- Formulario solo para Admin/Fisio -->
+  <div class="tratamiento-form" *ngIf="tratamiento && rolUsuario !== 'Paciente'">
     <h3>{{ tratamiento.idTratamiento ? 'Editar Tratamiento' : 'Nuevo Tratamiento' }}</h3>
 
     <form (ngSubmit)="guardar()">

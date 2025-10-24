@@ -31,7 +31,7 @@ export class TratamientoAddComponent implements OnInit {
 
   listarCitasActivas(): void {
     this.citaService.listar().subscribe({
-      next: (data: Cita[]) => this.citas = data.filter(c => c.estado === 'Activo'),
+      next: (data: Cita[]) => this.citas = data.filter(c => c.estado === 'Pendiente'),
       error: (err) => console.error('Error al listar citas', err)
     });
   }

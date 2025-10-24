@@ -14,10 +14,17 @@ export class TratamientoService {
   listar(): Observable<Tratamiento[]> {
     return this.http.get<Tratamiento[]>(this.apiUrl);
   }
+  
 
   guardar(tratamiento: Tratamiento): Observable<Tratamiento> {
-    return this.http.post<Tratamiento>(this.apiUrl, tratamiento);
-  }
+  return this.http.post<Tratamiento>(`${this.apiUrl}/guardar`, tratamiento);
+}
+
+listarMisTratamientos(idUsuario: number): Observable<Tratamiento[]> {
+  return this.http.get<Tratamiento[]>(`${this.apiUrl}/mis-tratamientos?idUsuario=${idUsuario}`);
+}
+
+
 
   actualizar(tratamiento: Tratamiento): Observable<Tratamiento> {
     return this.http.put<Tratamiento>(`${this.apiUrl}/${tratamiento.idTratamiento}`, tratamiento);
